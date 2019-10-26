@@ -200,18 +200,20 @@ function setDevMode(done) {
   done();
 }
 
+
+
 /**
  * Push build to gh-pages
  */
-gulp.task('deploy', function () {
-    return gulp.task('dist')
-        .src("./dist/**/*")
+function gh_deploy() {
+    return gulp.src("./dist/**/*")
         .pipe(deploy())
-});
+};
 
 
 
 exports.dev     = gulp.series(copyFonts, scss, js);
 exports.dist    = gulp.series(setProductionMode, distClean, copyFonts, scss, jsProductionMinified, jsProductionExpanded, distCopy, setDevMode);
 exports.watch   = serve;
+exports.deploy  = gulp.series(exports.dist, gh_deploy);
 exports.default = serve;

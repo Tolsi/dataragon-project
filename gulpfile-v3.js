@@ -218,5 +218,13 @@ gulp.task('dist', function(cb) {
   sequence('distClean', 'dev', 'distCopy', cb);
 });
 
+/**
+ * Push build to gh-pages
+ */
+gulp.task('deploy', ['dist'], function () {
+    return gulp.src("./dist/**/*")
+        .pipe(deploy())
+});
+
 gulp.task('watch', ['serve']);
 gulp.task('default', ['serve']);
