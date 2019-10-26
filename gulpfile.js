@@ -15,7 +15,8 @@ const imagemin = require('gulp-imagemin');
 const changed = require('gulp-changed');
 const del = require('del');
 const sequence = require('run-sequence');
-const pkg = require('./package.json')
+const pkg = require('./package.json');
+const deploy = require('gulp-gh-pages');
 
 var production = false;
 
@@ -198,6 +199,15 @@ function setDevMode(done) {
   production = false;
   done();
 }
+
+/**
+ * Push build to gh-pages
+ */
+gulp.task('deploy', function () {
+    return gulp.task('dist')
+        .src("./dist/**/*")
+        .pipe(deploy())
+});
 
 
 
